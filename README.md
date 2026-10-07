@@ -5,7 +5,7 @@ X-ray, a heat overlay from TDP and airflow, a power-on boot, and a five-mode bui
 
 **Live: [pc.badcodes.dev](https://pc.badcodes.dev)**
 
-<!-- demo-video -->
+https://github.com/user-attachments/assets/78975885-3744-4417-bd2b-90bb5f159955
 
 The machine comes apart on a slider. Pick any part, in 3D or from the list, to read what it does. A second page, `/build`, turns the same PC into a build game with compatibility rules, a spec sheet and share links. The 18 parts are generated in code, so there is no model file to download.
 
