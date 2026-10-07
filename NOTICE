@@ -1,0 +1,11 @@
+This project's code is licensed under the MIT licence in LICENSE. The
+following are not covered by it.
+
+The fan geometry in src/models/pc/parts.ts (and its use in
+src/models/pc/build-pc.ts) is adapted from Yoosseph/pc-anatomy, Copyright (c)
+2026 Yoseph, and is licensed MIT by its author, not under the MIT notice in
+LICENSE. Its licence text is kept at src/models/pc/LICENSE-pc-anatomy.txt.
+
+The BadCodes name, logo and wordmark are not licensed under the MIT
+licence. A fork keeps the copyright notice in LICENSE but should not
+present itself as BadCodes or use the logo as its own brand.

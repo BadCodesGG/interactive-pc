@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+:root {
+  /* Light theme: a seamless product-shot backdrop, white spec panels, one circuit-board teal accent.
+     The generic semantic names (--bg, --surface, --border) map onto these tokens so the engine UI
+     picks them up unchanged. */
+  --ground: #f4f5f6;
+  --line: #e2e5e9;
+  --pcb: #0b6b70;
+  --pcb-soft: #e3f3f2;
+  --bg: var(--ground);
+  --surface: #ffffff;
+  --surface-hover: #f4f5f6;
+  --border: var(--line);
+  /* The edge of a field the visitor types or switches in (the part search, the theme toggle). --line is
+     a hairline for panels and is 1.2:1 on the page, too faint to find a control by. Measured: #80878f is
+     3.33:1 on --bg, 3.63:1 on --surface and 3.33:1 on --surface-hover (WCAG 1.4.11 asks for 3:1). */
+  --field-border: #80878f;
+  --ink: #14161a;
+  --ink-secondary: #5a616d;
+  --ink-tertiary: #5a616d;
+  --accent: var(--pcb);
+  --accent-hover: #095a5e;
+  --accent-strong: var(--pcb);
+  --accent-soft: var(--pcb-soft);
+  --surface-inverted: #14161a;
+  --ink-inverted: #ffffff;
+  --ink-inverted-secondary: #d5d9de;
+  --positive: var(--pcb);
+  --caution: #9a5b00;
+  --error: #b3261e;
+  /* The pool of light at the centre of the stage backdrop; it falls off to --bg. */
+  --stage-hi: #ffffff;
+}
+
+/* Dark theme: graphite ground, lifted surfaces, the same teal accent lightened for the dark
+   ground. Same custom properties as :root, mapped the same way. surface-hover has no token of its
+   own: it is a step above surface, so a hovered row lifts on both the ground and a panel.
+   --ink-inverted is on-pcb, the text on an accent fill. */
+[data-theme="dark"] {
+  --ground: #101214;
+  --line: #2d3136;
+  --pcb: #3cc3c3;
+  --pcb-soft: #0f2e30;
+  --surface: #1a1d20;
+  --surface-hover: #22262a;
+  /* Measured: #6b7480 is 3.96:1 on --bg, 3.58:1 on --surface and 3.22:1 on --surface-hover. */
+  --field-border: #6b7480;
+  --ink: #eef0f2;
+  --ink-secondary: #a3aab5;
+  --ink-tertiary: #a3aab5;
+  --accent-hover: #63d4d4;
+  --surface-inverted: #eef0f2;
+  --ink-inverted: #0b1416;
+  --ink-inverted-secondary: #3d434b;
+  --caution: #f0b54a;
+  --error: #ff8a80;
+  --stage-hi: #2d353c;
+}
+
+/* The stage's backdrop: a soft pool of light on the page colour, in either theme. The canvas is
+   transparent, so this is what the 3D scene sits in. */
+.stage-backdrop {
+  background-color: transparent;
+  background-image: radial-gradient(ellipse at 50% 38%, var(--stage-hi) 0%, var(--bg) 62%);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-ink: var(--ink);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-tertiary: var(--ink-tertiary);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-surface-inverted: var(--surface-inverted);
+  --color-ink-inverted: var(--ink-inverted);
+  --color-ink-inverted-secondary: var(--ink-inverted-secondary);
+  --color-positive: var(--positive);
+  --color-caution: var(--caution);
+  --color-error: var(--error);
+  --font-display: var(--font-manrope);
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-plex-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+/* Focus: 2px solid pcb with a 2px ground gap. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-tertiary);
+}
+
+/* The explode slider: a native range, tinted to the accent. */
+input[type="range"][data-explode-range] {
+  accent-color: var(--accent);
+}
+
+/* /build's fixed "This build" bar (below lg) would sit over the footer's last lines, and the layout renders
+   the footer after the page, so the footer makes room for the bar: its height plus the safe-area inset. */
+@media (max-width: 1023.98px) {
+  body:has([data-sheet-bar]) > footer {
+    padding-bottom: calc(1.5rem + 4.25rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* In a short viewport (a phone on its side) the fixed bar would take a fifth of the screen and leave a sliver of the
+   stage, so there it joins the flow at the end of the page, as a card, and the footer needs no room made for it.
+   It opens the same sheet. */
+@media (max-width: 1023.98px) and (max-height: 480px) {
+  [data-sheet-bar] {
+    position: static;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+  }
+
+  body:has([data-sheet-bar]) > footer {
+    padding-bottom: 1.5rem;
+  }
+}
+
+/* The phone's spec sheet: a modal <dialog> that slides up from the bottom edge. */
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.sheet-dialog[open] {
+  animation: sheet-up 220ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet-dialog[open] {
+    animation: none;
+  }
+}

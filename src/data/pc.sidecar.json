@@ -1,0 +1,271 @@
+{
+  "schema": 1,
+  "model": "procedural:pc",
+  "assembly": {
+    "centre": null,
+    "radius": null,
+    "axis": null
+  },
+  "groups": {
+    "chassis": {
+      "label": "Chassis",
+      "stage": 0
+    },
+    "board": {
+      "label": "Board",
+      "stage": 1
+    },
+    "compute": {
+      "label": "Compute",
+      "stage": 1,
+      "explode": [
+        -0.3,
+        0,
+        0
+      ]
+    },
+    "graphics": {
+      "label": "Graphics",
+      "stage": 1
+    },
+    "storage": {
+      "label": "Storage",
+      "stage": 1
+    },
+    "power": {
+      "label": "Power",
+      "stage": 1
+    },
+    "cooling": {
+      "label": "Cooling",
+      "stage": 1
+    }
+  },
+  "parts": {
+    "case_frame": {
+      "label": "Case frame",
+      "group": "chassis",
+      "explode": [
+        0,
+        0,
+        0
+      ],
+      "copy": "case_frame"
+    },
+    "panel_left": {
+      "label": "Left side panel (glass)",
+      "group": "chassis",
+      "explode": [
+        -1.8,
+        0,
+        -4.9
+      ],
+      "copy": "panel_left"
+    },
+    "panel_right": {
+      "label": "Right side panel (steel)",
+      "group": "chassis",
+      "explode": [
+        2.2,
+        0,
+        0
+      ],
+      "copy": "panel_right"
+    },
+    "panel_front": {
+      "label": "Front panel (mesh)",
+      "group": "chassis",
+      "explode": [
+        0,
+        0,
+        2.6
+      ],
+      "copy": "panel_front"
+    },
+    "motherboard": {
+      "label": "Motherboard",
+      "group": "board",
+      "explode": [
+        -0.3,
+        0,
+        0
+      ],
+      "copy": "motherboard",
+      "view": {
+        "position": [
+          -3.6,
+          5.2,
+          3.4
+        ],
+        "target": [
+          0.5,
+          3.0,
+          -0.85
+        ]
+      }
+    },
+    "cpu": {
+      "label": "CPU",
+      "group": "compute",
+      "stage": 2,
+      "explode": [
+        -1.2,
+        0,
+        0
+      ],
+      "copy": "cpu",
+      "view": {
+        "position": [
+          -2.5,
+          4.5,
+          0.5
+        ],
+        "target": [
+          -0.69,
+          3.65,
+          -0.95
+        ]
+      }
+    },
+    "cooler": {
+      "label": "CPU cooler (air tower)",
+      "group": "compute",
+      "stage": 2,
+      "explode": [
+        -3.2,
+        1.0,
+        0
+      ],
+      "copy": "cooler"
+    },
+    "ram_1": {
+      "label": "Memory stick 1",
+      "group": "compute",
+      "stage": 2,
+      "explode": [
+        -2.0,
+        0.3,
+        0
+      ],
+      "copy": "ram_1"
+    },
+    "ram_2": {
+      "label": "Memory stick 2",
+      "group": "compute",
+      "stage": 2,
+      "explode": [
+        -2.2,
+        0.3,
+        0
+      ],
+      "copy": "ram_2"
+    },
+    "ram_3": {
+      "label": "Memory stick 3",
+      "group": "compute",
+      "stage": 2,
+      "explode": [
+        -2.4,
+        0.3,
+        0
+      ],
+      "copy": "ram_3"
+    },
+    "ram_4": {
+      "label": "Memory stick 4",
+      "group": "compute",
+      "stage": 2,
+      "explode": [
+        -2.6,
+        0.3,
+        0
+      ],
+      "copy": "ram_4"
+    },
+    "gpu": {
+      "label": "Graphics card",
+      "group": "graphics",
+      "explode": [
+        -2.2,
+        -0.15,
+        0
+      ],
+      "copy": "gpu",
+      "view": {
+        "position": [
+          -5.6,
+          4.6,
+          3.0
+        ],
+        "target": [
+          -2.08,
+          2.32,
+          -0.5
+        ]
+      }
+    },
+    "psu": {
+      "label": "Power supply",
+      "group": "power",
+      "explode": [
+        0,
+        0,
+        -2.8
+      ],
+      "copy": "psu"
+    },
+    "nvme": {
+      "label": "NVMe SSD (M.2)",
+      "group": "storage",
+      "explode": [
+        -0.9,
+        0,
+        0
+      ],
+      "copy": "nvme"
+    },
+    "ssd_sata": {
+      "label": "SATA SSD (2.5 in)",
+      "group": "storage",
+      "explode": [
+        1.3,
+        0,
+        2.8
+      ],
+      "copy": "ssd_sata"
+    },
+    "fan_front": {
+      "label": "Front intake fan",
+      "group": "cooling",
+      "explode": [
+        0,
+        0,
+        1.4
+      ],
+      "copy": "fan_front"
+    },
+    "fan_rear": {
+      "label": "Rear exhaust fan",
+      "group": "cooling",
+      "explode": [
+        0,
+        0,
+        -1.6
+      ],
+      "copy": "fan_rear"
+    },
+    "cables": {
+      "label": "Power and data cables",
+      "group": "power",
+      "explode": [
+        -2.0,
+        -0.2,
+        0
+      ],
+      "copy": "cables"
+    }
+  },
+  "xray": [
+    "chassis"
+  ]
+}
