@@ -44,7 +44,7 @@ export default function RootLayout({
         {/* Sets data-theme before first paint, so a dark visitor never sees a light flash. */}
         <script dangerouslySetInnerHTML={{ __html: themeScript() }} />
       </head>
-      <body className="flex min-h-full flex-col">
+      <body className="isolate flex min-h-full flex-col">
         <header className="border-b border-border py-3">
           <nav aria-label="Site" className="mx-auto flex max-w-7xl items-center px-4 md:px-6 justify-between gap-3 text-sm">
             {/* The links wrap among themselves; the toggle keeps the right edge of the first row. */}
