@@ -97,7 +97,7 @@ npm run check:sidecar  # every src/data/*.sidecar.json against its model and cop
 npm run fixture        # rebuilds public/models/fixture.<hash>.glb and points its sidecar at it
 ```
 
-`test:stage` needs a build first and Google Chrome: it launches the installed Chrome, not Playwright's bundled Chromium, so an older `npx playwright install chromium` setup is not enough. Without Chrome, `npx playwright install chrome` installs it (it needs an administrator shell on Windows and sudo on Linux).
+`test:stage` needs a build first and Google Chrome 156.0.8078.73 or later: it launches the installed Chrome, not Playwright's bundled Chromium, so an older `npx playwright install chromium` setup is not enough. Without Chrome, `npx playwright install chrome` installs it (it needs an administrator shell on Windows and sudo on Linux). Each launch prints the Chrome version and refuses one older than that, the first build patched for CVE-2026-118306 et al.
 
 ```bash
 npm run build
