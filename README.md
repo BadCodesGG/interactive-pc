@@ -48,7 +48,7 @@ src/models/pc/        The 18 procedural parts (chassis, board, cooler, gpu, psu,
 src/data/             Sidecars, copy books, catalogue, compatibility rules, modes, scoring, thermal model
 src/game/             The build game: store, state machine, faults, layout, 3D scene, audio
 src/lib/              Share-link codec, stage effects store, heat ramp, site metadata
-scripts/              Fixture builder, sidecar check, Chromium stage check
+scripts/              Fixture builder, sidecar check, Chrome stage check
 ```
 
 ### Explode maths
@@ -97,15 +97,14 @@ npm run check:sidecar  # every src/data/*.sidecar.json against its model and cop
 npm run fixture        # rebuilds public/models/fixture.<hash>.glb and points its sidecar at it
 ```
 
-`test:stage` needs a build first and Google Chrome (it launches the installed Chrome, not Playwright's bundled Chromium):
+`test:stage` needs a build first and Google Chrome: it launches the installed Chrome, not Playwright's bundled Chromium, so an older `npx playwright install chromium` setup is not enough. Without Chrome, `npx playwright install chrome` installs it (it needs an administrator shell on Windows and sudo on Linux).
 
 ```bash
-npx playwright install chrome
 npm run build
 npm run test:stage
 ```
 
-It boots `next start` and drives both routes in Chromium: the explode checks on `/`, and on `/build` the server-rendered tray, a part placed from the keyboard, a wrong order refused with its reason, and a full Guided build ending on the boot screen. Both routes also check for zero console errors and hold the payload budgets. Screenshots go to `.stage-shots/` (override with `STAGE_SHOTS_DIR`); set `STAGE_URL` to test a server that is already running. Add every new feature route to `ROUTES` in `scripts/check-stage.mjs`.
+It boots `next start` and drives both routes in Chrome: the explode checks on `/`, and on `/build` the server-rendered tray, a part placed from the keyboard, a wrong order refused with its reason, and a full Guided build ending on the boot screen. Both routes also check for zero console errors and hold the payload budgets. Screenshots go to `.stage-shots/` (override with `STAGE_SHOTS_DIR`); set `STAGE_URL` to test a server that is already running. Add every new feature route to `ROUTES` in `scripts/check-stage.mjs`.
 
 The test fixture (`public/models/fixture.<hash>.glb` and `src/data/fixture.sidecar.json`) is a small nine-part model that the loader tests and the `/models/` cache-header check use.
 
