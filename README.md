@@ -73,7 +73,7 @@ Each part moves by its authored `explode` vector if it has one; otherwise radial
 - **The share codec (`src/lib/share-build.ts`).** `?b=` is two characters per slot: a slot letter and the base 36 index into that kind's list. Decoding is an allow-list (lowercase letters and digits, at most 64 characters, known slot letters, in-range indexes) and the result is built from catalogue ids, never from the input. The order of every kind in `src/data/catalogue.ts` is the code and is pinned by `share-build.test.ts`: append new parts, never insert or reorder.
 - **Procedural parts carry their animation in `userData`.** The `rgb` and `spin` values on a part's node are what `power-scene.tsx` animates.
 - **Embedding.** `next.config.ts` sends `frame-ancestors 'self'` plus `https://badcodes.dev` and `https://www.badcodes.dev`, so only those origins can frame the pages. Change it if you host the site elsewhere.
-- **Console output.** `test:stage` fails on any console error and on any `THREE.` warning except the `THREE.Clock` deprecation that R3F 9.8 triggers. It launches Chromium with SwiftShader, which prints no shader notes; a real Windows GPU prints harmless ANGLE D3D11 notes (X4122, X3595) through `THREE.WebGLProgram`.
+- **Console output.** `test:stage` fails on any console error and on any `THREE.` warning except the `THREE.Clock` deprecation that R3F 9.8 triggers. It launches Chrome with SwiftShader, which prints no shader notes; a real Windows GPU prints harmless ANGLE D3D11 notes (X4122, X3595) through `THREE.WebGLProgram`.
 
 ## Running it
 
@@ -97,10 +97,10 @@ npm run check:sidecar  # every src/data/*.sidecar.json against its model and cop
 npm run fixture        # rebuilds public/models/fixture.<hash>.glb and points its sidecar at it
 ```
 
-`test:stage` needs a build first and Playwright's Chromium:
+`test:stage` needs a build first and Google Chrome (it launches the installed Chrome, not Playwright's bundled Chromium):
 
 ```bash
-npx playwright install chromium
+npx playwright install chrome
 npm run build
 npm run test:stage
 ```
