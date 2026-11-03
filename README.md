@@ -48,7 +48,7 @@ src/models/pc/        The 18 procedural parts (chassis, board, cooler, gpu, psu,
 src/data/             Sidecars, copy books, catalogue, compatibility rules, modes, scoring, thermal model
 src/game/             The build game: store, state machine, faults, layout, 3D scene, audio
 src/lib/              Share-link codec, stage effects store, heat ramp, site metadata
-scripts/              Fixture builder, sidecar check, Chromium stage check
+scripts/              Fixture builder, sidecar check, Chrome stage check
 ```
 
 ### Explode maths
@@ -73,7 +73,7 @@ Each part moves by its authored `explode` vector if it has one; otherwise radial
 - **The share codec (`src/lib/share-build.ts`).** `?b=` is two characters per slot: a slot letter and the base 36 index into that kind's list. Decoding is an allow-list (lowercase letters and digits, at most 64 characters, known slot letters, in-range indexes) and the result is built from catalogue ids, never from the input. The order of every kind in `src/data/catalogue.ts` is the code and is pinned by `share-build.test.ts`: append new parts, never insert or reorder.
 - **Procedural parts carry their animation in `userData`.** The `rgb` and `spin` values on a part's node are what `power-scene.tsx` animates.
 - **Embedding.** `next.config.ts` sends `frame-ancestors 'self'` plus `https://badcodes.dev` and `https://www.badcodes.dev`, so only those origins can frame the pages. Change it if you host the site elsewhere.
-- **Console output.** `test:stage` fails on any console error and on any `THREE.` warning except the `THREE.Clock` deprecation that R3F 9.8 triggers. It launches Chromium with SwiftShader, which prints no shader notes; a real Windows GPU prints harmless ANGLE D3D11 notes (X4122, X3595) through `THREE.WebGLProgram`.
+- **Console output.** `test:stage` fails on any console error and on any `THREE.` warning except the `THREE.Clock` deprecation that R3F 9.8 triggers. It launches Chrome with SwiftShader, which prints no shader notes; a real Windows GPU prints harmless ANGLE D3D11 notes (X4122, X3595) through `THREE.WebGLProgram`.
 
 ## Running it
 
@@ -97,15 +97,14 @@ npm run check:sidecar  # every src/data/*.sidecar.json against its model and cop
 npm run fixture        # rebuilds public/models/fixture.<hash>.glb and points its sidecar at it
 ```
 
-`test:stage` needs a build first and Playwright's Chromium:
+`test:stage` needs a build first and Google Chrome 156.0.8078.73 or later: it launches the installed Chrome, not Playwright's bundled Chromium, so an older `npx playwright install chromium` setup is not enough. Without Chrome, `npx playwright install chrome` installs it (it needs an administrator shell on Windows and sudo on Linux). Each launch prints the Chrome version and refuses one older than that, the first build patched for CVE-2026-118306 et al.
 
 ```bash
-npx playwright install chromium
 npm run build
 npm run test:stage
 ```
 
-It boots `next start` and drives both routes in Chromium: the explode checks on `/`, and on `/build` the server-rendered tray, a part placed from the keyboard, a wrong order refused with its reason, and a full Guided build ending on the boot screen. Both routes also check for zero console errors and hold the payload budgets. Screenshots go to `.stage-shots/` (override with `STAGE_SHOTS_DIR`); set `STAGE_URL` to test a server that is already running. Add every new feature route to `ROUTES` in `scripts/check-stage.mjs`.
+It boots `next start` and drives both routes in Chrome: the explode checks on `/`, and on `/build` the server-rendered tray, a part placed from the keyboard, a wrong order refused with its reason, and a full Guided build ending on the boot screen. Both routes also check for zero console errors and hold the payload budgets. Screenshots go to `.stage-shots/` (override with `STAGE_SHOTS_DIR`); set `STAGE_URL` to test a server that is already running. Add every new feature route to `ROUTES` in `scripts/check-stage.mjs`.
 
 The test fixture (`public/models/fixture.<hash>.glb` and `src/data/fixture.sidecar.json`) is a small nine-part model that the loader tests and the `/models/` cache-header check use.
 
