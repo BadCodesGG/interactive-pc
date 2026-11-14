@@ -110,6 +110,8 @@ CI (`.github/workflows/ci.yml`) runs lint, typecheck, tests and the build on eve
 
 `package.json` `overrides` clear GHSA-g3hv-75wg-m249 (minimatch >=7.0.0 <11.0.1) in dev tools: `minimatch` ^11.0.8 under `@typescript-eslint/typescript-estree` (lint) and `glob` ^14.0.6 under `@donmccurdy/caporal` (the `gltf-transform` CLI's argument parser, which pulls minimatch 11). Both parents declare an older major and only use the named `minimatch()` / promise `glob()` exports, which the new majors keep. Drop each once its parent declares a fixed range (`npm view <pkg> dependencies`), then rerun `npm audit`.
 
+`package.json` `allowScripts` denies esbuild's postinstall (`node install.js`, pulled in by `tsx`). npm installs the platform binary as an optional dependency, so the script only re-checks it; `tsx` and `npm run check:sidecar` run without it. If a new dependency brings an install script, npm names it on install: approve it with `npm install-scripts approve <pkg>` only when the package needs it to work.
+
 The test fixture (`public/models/fixture.<hash>.glb` and `src/data/fixture.sidecar.json`) is a small nine-part model that the loader tests and the `/models/` cache-header check use.
 
 ## Credits and licence

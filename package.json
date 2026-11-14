@@ -67,5 +67,8 @@
     "@donmccurdy/caporal": {
       "glob": "^14.0.6"
     }
+  },
+  "allowScripts": {
+    "esbuild": false
   }
 }
