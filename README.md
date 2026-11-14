@@ -110,6 +110,8 @@ CI (`.github/workflows/ci.yml`) runs lint, typecheck, tests and the build on eve
 
 `package.json` `overrides` clear GHSA-g3hv-75wg-m249 (minimatch >=7.0.0 <11.0.1) in dev tools: `minimatch` ^11.0.8 under `@typescript-eslint/typescript-estree` (lint) and `glob` ^14.0.6 under `@donmccurdy/caporal` (the `gltf-transform` CLI's argument parser, which pulls minimatch 11). Both parents declare an older major and only use the named `minimatch()` / promise `glob()` exports, which the new majors keep. Drop each once its parent declares a fixed range (`npm view <pkg> dependencies`), then rerun `npm audit`.
 
+`package.json` `allowScripts` records a denial for esbuild's postinstall (`node install.js`, pulled in by `tsx`). npm 11 (the npm of Node 24) skips every dependency install script that `allowScripts` does not approve, so the entry does not change what an install runs: it records that the script was reviewed and stops npm listing it after each install. esbuild takes its binary from the `@esbuild/<platform>` optional dependency, so `tsx` and `npm run check:sidecar` work without the script as long as optional dependencies are installed (do not install with `--omit=optional`). An older npm (Node 22's bundled npm 10) ignores the field and runs the script as it always did. When an npm 11 install lists another skipped script (on macOS, `fsevents`), check whether that package needs it, then `npm install-scripts approve <pkg>` or `npm install-scripts deny <pkg>`.
+
 The test fixture (`public/models/fixture.<hash>.glb` and `src/data/fixture.sidecar.json`) is a small nine-part model that the loader tests and the `/models/` cache-header check use.
 
 ## Credits and licence
