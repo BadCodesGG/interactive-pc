@@ -106,6 +106,10 @@ npm run test:stage
 
 It boots `next start` and drives both routes in Chrome: the explode checks on `/`, and on `/build` the server-rendered tray, a part placed from the keyboard, a wrong order refused with its reason, and a full Guided build ending on the boot screen. Both routes also check for zero console errors and hold the payload budgets. Screenshots go to `.stage-shots/` (override with `STAGE_SHOTS_DIR`); set `STAGE_URL` to test a server that is already running. Add every new feature route to `ROUTES` in `scripts/check-stage.mjs`.
 
+CI (`.github/workflows/ci.yml`) runs lint, typecheck, tests and the build on every push to `main`, not on pull requests; `check:sidecar` and `test:stage` stay local.
+
+`package.json` `overrides` clear GHSA-g3hv-75wg-m249 (minimatch >=7.0.0 <11.0.1) in dev tools: `minimatch` ^11.0.8 under `@typescript-eslint/typescript-estree` (lint) and `glob` ^14.0.6 under `@donmccurdy/caporal` (the `gltf-transform` CLI's argument parser, which pulls minimatch 11). Both parents declare an older major and only use the named `minimatch()` / promise `glob()` exports, which the new majors keep. Drop each once its parent declares a fixed range (`npm view <pkg> dependencies`), then rerun `npm audit`.
+
 The test fixture (`public/models/fixture.<hash>.glb` and `src/data/fixture.sidecar.json`) is a small nine-part model that the loader tests and the `/models/` cache-header check use.
 
 ## Credits and licence
